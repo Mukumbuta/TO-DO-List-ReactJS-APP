@@ -4,11 +4,10 @@ import './index.css';
 import reportWebVitals from './reportWebVitals';
 import TodoHolder from './components/TodoContainer';
 
-ReactDOM.render(
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(
   <React.StrictMode>
     <TodoHolder />
   </React.StrictMode>,
-  document.getElementById('root'),
 );
-
 reportWebVitals();
