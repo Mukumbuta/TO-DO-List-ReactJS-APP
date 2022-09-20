@@ -13,6 +13,22 @@ class TodoContainer extends React.Component {
     });
   }
 
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.todoList !== this.state.todoList) {
+      const updtatedList = JSON.stringify(this.state.todoList)
+      localStorage.setItem("todoList", updtatedList)
+    }
+  }
+
+  componentDidMount() {
+    const localStorageList = JSON.parse(localStorage.getItem("todoList"))
+    if (localStorageList) {
+      this.setState({
+        todoList: localStorageList
+      })
+    }
+  }
+
   handleTodoStatus = (id) => {
     const todoID = id;
     this.setState((prevState) => ({
