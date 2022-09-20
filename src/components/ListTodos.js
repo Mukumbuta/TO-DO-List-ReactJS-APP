@@ -5,13 +5,15 @@ import TodoItem from './TodoItems';
 // eslint-disable-next-line  react/prefer-stateless-function
 class ListTodos extends Component {
   render() {
-    const { todoList, handleStatus, handleDeletion} = this.props;
+    const { todoList, updateTitle, handleStatus, handleDeletion} = this.props;
     return (
       <div>
         <ul>
           {todoList.map((todo) => (
             <TodoItem key={todo.id} 
-            todo={todo} handleStatus={handleStatus} handleDeletion={handleDeletion} />
+              updateTitle={updateTitle}
+              todo={todo} handleStatus={handleStatus} 
+              handleDeletion={handleDeletion} />
           ))}
         </ul>
       </div>

@@ -2,29 +2,14 @@ import React from 'react';
 import Header from './Header';
 import InputTodo from './Input';
 import TodoList from './ListTodos';
+import { v4 as uuidv4 } from 'uuid';
 
 // eslint-disable-next-line  react/prefer-stateless-function
 class TodoContainer extends React.Component {
   constructor() {
     super();
     this.state = ({
-      todoList: [
-        {
-          id: 1,
-          title: 'Setup dev-env',
-          completed: true,
-        },
-        {
-          id: 2,
-          title: 'Develope website',
-          completed: false,
-        },
-        {
-          id: 3,
-          title: 'Deploy to live server',
-          completed: false,
-        },
-      ],
+      todoList: [],
     });
   }
 
@@ -58,26 +43,40 @@ class TodoContainer extends React.Component {
   
   addTodo = (todoTitle) => {
     const newTodo = {
-      id: 4,
+      id: uuidv4(),
       title: todoTitle,
       completed: false
     };
-    
+
     this.setState({
       todoList: [...this.state.todoList, newTodo]
     });
   };
+
+  updateTitle = (newTitle, id) => {
+    this.setState({
+      todoList: this.state.todoList.map((todo) => {
+        if (todo.id === id) {
+          todo.title = newTitle
+        }
+        return todo
+      }),
+    });
+  }
   
   render() {
     const { todoList } = this.state;
     return (
-      <div>
-        <Header />
-        <InputTodo addTodo={this.addTodo} />
-        <TodoList 
-          todoList={todoList} 
-          handleStatus={this.handleTodoStatus} 
-          handleDeletion={this.handleDeletion} />
+      <div className="container">
+        <div className="inner">
+          <Header />
+          <InputTodo addTodo={this.addTodo} />
+          <TodoList 
+            todoList={todoList} 
+            handleStatus={this.handleTodoStatus} 
+            updateTitle={this.updateTitle}
+            handleDeletion={this.handleDeletion} />
+        </div>
       </div>
     );
   }
