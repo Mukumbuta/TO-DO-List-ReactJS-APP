@@ -5,7 +5,7 @@ const Input = (props) => {
   const [inputText, setInputText] = useState({
     title: '',
   });
-  const { addTodo } = props;
+
   const handleInput = (e) => {
     setInputText({
       ...inputText,
@@ -14,8 +14,10 @@ const Input = (props) => {
   };
   // eslint-disable-next-line consistent-return
   const handleSubmit = (e) => {
+    const { addTodo } = props;
     const { title } = inputText;
     e.preventDefault();
+
     if (title.trim()) {
       addTodo(title);
       setInputText({
@@ -40,7 +42,7 @@ const Input = (props) => {
           name="title"
           onChange={handleInput}
         />
-        <button type="button" className="input-submit">Submit</button>
+        <button type="submit" className="input-submit">Submit</button>
       </form>
     </div>
   );

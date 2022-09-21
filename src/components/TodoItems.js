@@ -79,7 +79,7 @@ const TodoItems = (props) => {
 
 TodoItems.propTypes = {
   // eslint-disable-next-line react/forbid-prop-types
-  todo: PropTypes.array.isRequired,
+  todo: PropTypes.object.isRequired,
   updateTitle: PropTypes.func.isRequired,
   handleStatus: PropTypes.func.isRequired,
   handleDeletion: PropTypes.func.isRequired,

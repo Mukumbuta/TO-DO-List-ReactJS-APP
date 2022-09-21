@@ -11,7 +11,7 @@ const DeleteBtn = (props) => {
 };
 
 // eslint-disable-next-line react/forbid-prop-types
-DeleteBtn.propTypes = { todo: PropTypes.array.isRequired };
+DeleteBtn.propTypes = { todo: PropTypes.object.isRequired };
 DeleteBtn.propTypes = { handleDeletion: PropTypes.func.isRequired };
 
 export default DeleteBtn;

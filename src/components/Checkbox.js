@@ -18,7 +18,7 @@ const Checkbox = (props) => {
 };
 
 // eslint-disable-next-line react/forbid-prop-types
-Checkbox.propTypes = { todo: PropTypes.array.isRequired };
+Checkbox.propTypes = { todo: PropTypes.object.isRequired };
 Checkbox.propTypes = { handleStatus: PropTypes.func.isRequired };
 
 export default Checkbox;
