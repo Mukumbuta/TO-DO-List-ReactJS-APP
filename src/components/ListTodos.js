@@ -1,25 +1,23 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import TodoItem from './TodoItems';
 
-// eslint-disable-next-line  react/prefer-stateless-function
-class ListTodos extends Component {
-  render() {
-    const { todoList, updateTitle, handleStatus, handleDeletion} = this.props;
-    return (
-      <div>
-        <ul>
-          {todoList.map((todo) => (
-            <TodoItem key={todo.id} 
-              updateTitle={updateTitle}
-              todo={todo} handleStatus={handleStatus} 
-              handleDeletion={handleDeletion} />
-          ))}
-        </ul>
-      </div>
-    );
-  }
+const ListTodos = (props) => {
+  const { todoList, updateTitle, handleStatus, handleDeletion} = props;
+  return (
+    <div>
+      <ul>
+        {todoList.map((todo) => (
+          <TodoItem key={todo.id} 
+            updateTitle={updateTitle}
+            todo={todo} handleStatus={handleStatus} 
+            handleDeletion={handleDeletion} />
+        ))}
+      </ul>
+    </div>
+  );
 }
+
 
 ListTodos.propTypes = {
   todoList: PropTypes.array.isRequired,
