@@ -1,15 +1,17 @@
-import React, { Component } from 'react'
+import React from 'react';
+import PropTypes from 'prop-types';
 
-export class DeleteBtn extends Component {
-  render() {
-    const { todo, handleDeletion } = this.props
-    return (
-      <div>
-        <button onClick={() => handleDeletion(todo.id)}>Delete</button>
-      </div>
-    )
-  }
-}
+const DeleteBtn = (props) => {
+  const { todo, handleDeletion } = props;
+  return (
+    <div>
+      <button type="button" onClick={() => handleDeletion(todo.id)}>Delete</button>
+    </div>
+  );
+};
 
-export default DeleteBtn
+// eslint-disable-next-line react/forbid-prop-types
+DeleteBtn.propTypes = { todo: PropTypes.array.isRequired };
+DeleteBtn.propTypes = { handleDeletion: PropTypes.func.isRequired };
 
+export default DeleteBtn;

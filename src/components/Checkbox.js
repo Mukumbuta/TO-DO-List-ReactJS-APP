@@ -1,20 +1,24 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
-class Checkbox extends React.Component {
+const Checkbox = (props) => {
+  const { todo, handleStatus } = props;
 
-  render() {
-    const { todo, handleStatus } = this.props;
-    
-    return (
-      <div>
-        <input type="checkbox" 
-          className="checkbox"
-          id={todo.id} checked={todo.completed} 
-        onChange={() => handleStatus(todo.id)} />
-      </div>
-    )
-  }
- 
-}
+  return (
+    <div>
+      <input
+        type="checkbox"
+        className="checkbox"
+        id={todo.id}
+        checked={todo.completed}
+        onChange={() => handleStatus(todo.id)}
+      />
+    </div>
+  );
+};
 
-export default Checkbox
+// eslint-disable-next-line react/forbid-prop-types
+Checkbox.propTypes = { todo: PropTypes.array.isRequired };
+Checkbox.propTypes = { handleStatus: PropTypes.func.isRequired };
+
+export default Checkbox;
