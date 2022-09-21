@@ -1,101 +1,80 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Header from './Header';
 import InputTodo from './Input';
 import TodoList from './ListTodos';
 import { v4 as uuidv4 } from 'uuid';
 
-// eslint-disable-next-line  react/prefer-stateless-function
-class TodoContainer extends React.Component {
-  constructor() {
-    super();
-    this.state = ({
-      todoList: [],
-    });
-  }
-
-  componentDidUpdate(prevProps, prevState) {
-    if (prevState.todoList !== this.state.todoList) {
-      const updtatedList = JSON.stringify(this.state.todoList)
-      localStorage.setItem("todoList", updtatedList)
-    }
-  }
-
-  componentDidMount() {
+const getlocalTodos = () => {
     const localStorageList = JSON.parse(localStorage.getItem("todoList"))
-    if (localStorageList) {
-      this.setState({
-        todoList: localStorageList
-      })
-    }
+    return localStorageList || []
   }
 
-  handleTodoStatus = (id) => {
-    const todoID = id;
-    this.setState((prevState) => ({
-      todoList: prevState.todoList.map((todo) => {
-        if (todo.id === todoID) {
+const TodoContainer = () => {
+  const [ todoList, setTodoList ] = useState(getlocalTodos());
+
+  const handleTodoStatus = (id) => {
+    setTodoList((prevState) => {
+      prevState.map((todo) => {
+        if (todo.id === id) {
           return {
             ...todo,
             completed: !todo.completed,
-          };
+          }
         }
-        
-        return todo;
-      }),
-    }))
-  };
+      })
+    })
+  }
 
-  handleDeletion = (id) => {
+  const handleDeletion = (id) => {
     const todoID = id;
-    this.setState({
-      todoList: [
-        // eslint-disable-next-line react/destructuring-assignment
-        ...this.state.todoList.filter((todo) => {
+    setTodoList([
+        ...todoList.filter((todo) => {
           return todo.id !== todoID;
         })
       ]
-    });
+    );
   };
   
-  addTodo = (todoTitle) => {
+  const addTodo = (todoTitle) => {
     const newTodo = {
       id: uuidv4(),
       title: todoTitle,
       completed: false
     };
-
-    this.setState({
-      todoList: [...this.state.todoList, newTodo]
-    });
+    setTodoList([
+      ...todoList, newTodo
+    ]);
   };
 
-  updateTitle = (newTitle, id) => {
-    this.setState({
-      todoList: this.state.todoList.map((todo) => {
+  const updateTitle = (newTitle, id) => {
+    setTodoList(
+      todoList.map((todo) => {
         if (todo.id === id) {
           todo.title = newTitle
         }
         return todo
       }),
-    });
-  }
-  
-  render() {
-    const { todoList } = this.state;
-    return (
-      <div className="container">
-        <div className="inner">
-          <Header />
-          <InputTodo addTodo={this.addTodo} />
-          <TodoList 
-            todoList={todoList} 
-            handleStatus={this.handleTodoStatus} 
-            updateTitle={this.updateTitle}
-            handleDeletion={this.handleDeletion} />
-        </div>
-      </div>
     );
   }
+  
+  useEffect(() => {
+    const storeTodo = JSON.stringify(todoList)
+    localStorage.setItem("todoList", storeTodo)
+  }, [todoList])
+
+  return (
+    <div className="container">
+      <div className="inner">
+        <Header />
+        <InputTodo addTodo={addTodo} />
+        <TodoList 
+          todoList={todoList} 
+          handleStatus={handleTodoStatus} 
+          updateTitle={updateTitle}
+          handleDeletion={handleDeletion} />
+      </div>
+    </div>
+  );
 }
     
 export default TodoContainer;
